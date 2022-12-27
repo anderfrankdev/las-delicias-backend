@@ -1,0 +1,50 @@
+type Plate{
+    price:Float
+    title:String
+    images:[String]
+}
+
+type Order{
+    price:Float
+    title:String
+    images:[String]
+    amount:Float
+    date:Float
+    status:String
+}
+
+type User{
+    name:String
+    email: String
+    password: String
+    cart:[Plate]
+    favourites:[Plate]
+    orders:[Order]
+}
+
+input UserInput{
+    name:String!
+    email: String!
+    password: String!
+}
+
+type LogoutMsg{
+    message: String!
+}
+
+type Query{
+    getOwnData:User
+    logout:LogoutMsg
+}
+
+input LoginInput{
+    email: String!
+    password: String!
+}
+
+
+type Mutation{
+    createUser(input:UserInput!):User
+    addTodo(input:[[String]]!):User 
+    login(input:LoginInput):User
+}
