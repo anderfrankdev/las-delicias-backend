@@ -6,11 +6,11 @@ const createUser = (async(root, args, request)=>{
 	const {input} = args;
 
 	if (!input.name)
-		throw new GraphQLError("Your name is required to signup");
+		throw new Error("Your name is required to signup");
 	if (!input.email) 
-		throw new GraphQLError("Your email is required to signup");
+		throw new Error("Your email is required to signup");
     if (!input.password)
-		throw new GraphQLError("You need a password to create your account");
+		throw new Error("You need a password to create your account");
 
     try{
 		const user = new User(input)
@@ -19,10 +19,9 @@ const createUser = (async(root, args, request)=>{
 
         return created.toJSON()
     }catch(err){
-
 	    const field = Object.keys(err.keyPattern)[0]
 
-        throw new GraphQLError("There is already a registered "+
+        throw new Error("There is already a registered "+
 		`user with this ${field}`)
 	}
 })

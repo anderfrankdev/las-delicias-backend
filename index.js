@@ -81,7 +81,7 @@ const globalMiddlewaresList = f([
 
 	require("express-useragent").express(),
 
-	require("./middlewares/checksession.middleware.js")
+	require("./middlewares/checksession.js")
 
 ]);
 
