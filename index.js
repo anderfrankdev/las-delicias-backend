@@ -9,15 +9,28 @@ const dbConnection = require("./database/config")
 // ******* presenters *********
 
 const createUser = require("./presenters/createUser");
+const checkSession = require("./presenters/checkSession")
+const loginPresenter = require("./presenters/login")
 
-// ************
+// ***** Models ******
+
+const User = require("./models/User");
 
 // ******* middlewares ********
 
 const {makeExecutableSchema} = require("@graphql-tools/schema")
 const {graphqlHTTP} = require("express-graphql") 
-
+const jsonMiddleware = require("express").json()
 const session = require("express-session")
+const filesMiddleware = require("express").static("./public")
+const corsMiddleware = require("cors")({
+ 	origin :"http://localhost:5173",
+ 	credentials:true
+})
+const userAgent = require("express-useragent").express()
+
+const checkSessionMiddleware = 
+	require("./middlewares/checksession.js")
 
 const sessionStore = 
 	require('connect-mongodb-session')(session);
@@ -66,30 +79,31 @@ const isDev = process.env.NODE_ENV !== 'production'
 
 const f = Object.freeze
 
+// Arreglar estos middlewares - asignar las importanciones a variables con un buen nombre 
+
 const globalMiddlewaresList = f([
 	
 	sessions,
 
-	require("cors")({
-	   	origin :"http://localhost:5173",
-	   	credentials:true
-	  }),
+	corsMiddleware,
   	
-	require("express").json(),
+	jsonMiddleware,
   	
-	require("express").static("./public"),
+	filesMiddleware,
 
-	require("express-useragent").express(),
+	userAgent,
 
-	require("./middlewares/checksession.js")
+	checkSessionMiddleware
 
 ]);
 
 const graphqlPresenters = {
     Query:{
+    	getOwnData:checkSession(User)
     },
     Mutation:{
-    	createUser
+    	createUser:createUser(User),
+    	login:loginPresenter(User)
    	}
 }
 
@@ -105,8 +119,11 @@ globalMiddlewaresList.forEach((middleware)=>{
 })
 
 specificMiddlewareList.forEach((object)=>{
+	
 	const {url,middleware} = object
+	
 	app.use(url,middleware)
+
 })
 
 app.listen(8080,()=>{

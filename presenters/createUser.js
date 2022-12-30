@@ -1,8 +1,8 @@
-const User = require("../models/User");
-const GraphQLError = require('graphql');
+const getDevice = require("../libs/getDevice")
+const {curry} = require("../libs/functional.lib");
 
-const createUser = (async(root, args, request)=>{
-			
+const createUser = curry(async(User,root, args, request)=>{
+	
 	const {input} = args;
 
 	if (!input.name)
@@ -16,7 +16,9 @@ const createUser = (async(root, args, request)=>{
 		const user = new User(input)
 
 	    const created = await user.save()
-
+	    request.session.user = user.id
+		request.session.device = getDevice(request.useragent)
+		console.log(request.session)
         return created.toJSON()
     }catch(err){
 	    const field = Object.keys(err.keyPattern)[0]

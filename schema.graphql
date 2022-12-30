@@ -46,5 +46,5 @@ input LoginInput{
 type Mutation{
     createUser(input:UserInput!):User
     addTodo(input:[[String]]!):User 
-    login(input:LoginInput):User
+    login(input:LoginInput!):User
 }
