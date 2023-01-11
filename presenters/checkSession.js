@@ -6,7 +6,6 @@ const checkSession = curry(async(UserModel,root, args, request)=>{
 
 		if(!request?.session?.user) return null
 
-		console.log(request?.session)
 
 		const user = await UserModel.findById(request?.session.user)
 

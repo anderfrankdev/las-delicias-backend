@@ -1,7 +1,12 @@
 type Plate{
+    id:ID
     price:Float
     title:String
     images:[String]
+    ingridients:[String]
+    description:String
+    stripe_code:String
+    category:String
 }
 
 type Order{
@@ -35,6 +40,7 @@ type LogoutMsg{
 type Query{
     getOwnData:User
     logout:LogoutMsg
+    getPlates:[Plate]
 }
 
 input LoginInput{
@@ -42,9 +48,32 @@ input LoginInput{
     password: String!
 }
 
+enum Category{
+    Italian
+    Japanese
+    Soup
+    Fast
+    Seafood
+    Meat
+    Vegan
+    Desserts
+    Salads
+}
+
+input PlateInput{
+    price:Float
+    title:String
+    images:[String]
+    ingridients:[String]
+    description:String
+    stripe_code:String
+    category:Category
+}
+
 
 type Mutation{
     createUser(input:UserInput!):User
+    createPlate(input:PlateInput!):Plate
     addTodo(input:[[String]]!):User 
     login(input:LoginInput!):User
 }

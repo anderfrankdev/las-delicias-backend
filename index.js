@@ -11,10 +11,14 @@ const dbConnection = require("./database/config")
 const createUser = require("./presenters/createUser");
 const checkSession = require("./presenters/checkSession")
 const loginPresenter = require("./presenters/login")
+const logoutPresenter = require("./presenters/logout")
+const createPlate = require("./presenters/createPlate");
+const getPlates = require("./presenters/getPlates");
 
 // ***** Models ******
 
 const User = require("./models/User");
+const Plate = require("./models/Plate");
 
 // ******* middlewares ********
 
@@ -79,8 +83,6 @@ const isDev = process.env.NODE_ENV !== 'production'
 
 const f = Object.freeze
 
-// Arreglar estos middlewares - asignar las importanciones a variables con un buen nombre 
-
 const globalMiddlewaresList = f([
 	
 	sessions,
@@ -99,11 +101,14 @@ const globalMiddlewaresList = f([
 
 const graphqlPresenters = {
     Query:{
-    	getOwnData:checkSession(User)
+    	getOwnData:checkSession(User),
+    	getPlates:getPlates(Plate),
+    	logout:logoutPresenter	
     },
     Mutation:{
     	createUser:createUser(User),
-    	login:loginPresenter(User)
+    	login:loginPresenter(User),
+    	createPlate:createPlate(Plate)
    	}
 }
 
