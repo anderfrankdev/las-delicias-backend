@@ -58,6 +58,7 @@ enum Category{
     Vegan
     Desserts
     Salads
+    Venezuelan
 }
 
 input PlateInput{
