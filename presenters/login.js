@@ -16,7 +16,7 @@ const loginPresenter = curry(async(User,root, args, request)=>{
 		request.session.user = user.id
 		request.session.device = getDevice(request.useragent)
 
-		return user
+		return user.toJSON()
 	}catch(err){
 		const errorName = `${err}`.slice(7,)
 		throw new Error(errorName)

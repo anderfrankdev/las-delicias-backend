@@ -18,13 +18,23 @@ type Order{
     status:String
 }
 
+type Address{
+    recipient:String
+    house:Int
+    street:String
+    city:String
+    state:String
+    zipcode:Int
+}
+
 type User{
     name:String
     email: String
     password: String
-    cart:[Plate]
+    cart:[[String]]
     favourites:[Plate]
     orders:[Order]
+    addresses:[Address]
 }
 
 input UserInput{
@@ -71,10 +81,24 @@ input PlateInput{
     category:Category
 }
 
+input StripeObject{
+    price:String
+    quantity:Int
+}
 
+type PaymentResponse{
+    
+    url:String
+
+}
+type Message{
+    message:String
+}
 type Mutation{
     createUser(input:UserInput!):User
     createPlate(input:PlateInput!):Plate
-    addTodo(input:[[String]]!):User 
     login(input:LoginInput!):User
+    pay(input:[[String]]!):PaymentResponse
+    addToCart(input:[[String]]!):Message
+    deleteItemInCart(input:String!):Message
 }

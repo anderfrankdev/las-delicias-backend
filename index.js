@@ -3,7 +3,6 @@ console.time("App start")
 require('dotenv').config()
 
 const app = require("express")()
-
 const dbConnection = require("./database/config")
 
 // ******* presenters *********
@@ -14,7 +13,9 @@ const loginPresenter = require("./presenters/login")
 const logoutPresenter = require("./presenters/logout")
 const createPlate = require("./presenters/createPlate");
 const getPlates = require("./presenters/getPlates");
-
+const payWithStripe = require("./presenters/payWithStripe");
+const addToCart = require("./presenters/addToCart");
+const deleteItemInCart = require("./presenters/deleteItemInCart");
 // ***** Models ******
 
 const User = require("./models/User");
@@ -108,7 +109,10 @@ const graphqlPresenters = {
     Mutation:{
     	createUser:createUser(User),
     	login:loginPresenter(User),
-    	createPlate:createPlate(Plate)
+    	createPlate:createPlate(Plate),
+    	pay:payWithStripe,
+    	addToCart:addToCart(User),
+    	deleteItemInCart:deleteItemInCart(User)
    	}
 }
 

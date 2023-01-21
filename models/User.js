@@ -25,6 +25,10 @@ const UserSchema = Schema({
 	orders:{
 		type:Array,
 		required:false
+	},
+	addresses:{
+		type:Array,
+		required:false
 	}
 });
 
