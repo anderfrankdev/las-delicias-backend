@@ -16,6 +16,11 @@ const getPlates = require("./presenters/getPlates");
 const payWithStripe = require("./presenters/payWithStripe");
 const addToCart = require("./presenters/addToCart");
 const deleteItemInCart = require("./presenters/deleteItemInCart");
+const addAddress = require("./presenters/addAddress");
+const deleteAddress = require("./presenters/deleteAddress");
+const selectAddress = require("./presenters/selectAddress");
+
+
 // ***** Models ******
 
 const User = require("./models/User");
@@ -110,9 +115,12 @@ const graphqlPresenters = {
     	createUser:createUser(User),
     	login:loginPresenter(User),
     	createPlate:createPlate(Plate),
-    	pay:payWithStripe,
+    	pay:payWithStripe(User),
     	addToCart:addToCart(User),
-    	deleteItemInCart:deleteItemInCart(User)
+    	deleteItemInCart:deleteItemInCart(User),
+    	addAddress:addAddress(User),
+    	deleteAddress:deleteAddress(User),
+    	selectAddress:selectAddress(User)
    	}
 }
 

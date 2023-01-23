@@ -19,12 +19,22 @@ type Order{
 }
 
 type Address{
+    id:ID
     recipient:String
-    house:Int
+    house:String
     street:String
     city:String
     state:String
-    zipcode:Int
+    zipcode:String
+    main:Boolean
+}
+input AddressInput{
+    recipient:String
+    house:String
+    street:String
+    city:String
+    state:String
+    zipcode:String
 }
 
 type User{
@@ -94,6 +104,10 @@ type PaymentResponse{
 type Message{
     message:String
 }
+type AddressMessage{
+    message:String
+    id:ID
+}
 type Mutation{
     createUser(input:UserInput!):User
     createPlate(input:PlateInput!):Plate
@@ -101,4 +115,7 @@ type Mutation{
     pay(input:[[String]]!):PaymentResponse
     addToCart(input:[[String]]!):Message
     deleteItemInCart(input:String!):Message
+    addAddress(input:AddressInput!):AddressMessage
+    deleteAddress(input:ID!):Message
+    selectAddress(input:ID!):Message
 }

@@ -14,6 +14,7 @@ const loginPresenter = curry(async(User,root, args, request)=>{
 			throw new Error("Invalid password")
 
 		request.session.user = user.id
+		request.session.email = user.email
 		request.session.device = getDevice(request.useragent)
 
 		return user.toJSON()

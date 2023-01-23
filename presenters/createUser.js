@@ -17,6 +17,7 @@ const createUser = curry(async(User,root, args, request)=>{
 
 	    const created = await user.save()
 	    request.session.user = user.id
+		request.session.email = user.email
 		request.session.device = getDevice(request.useragent)
         return created.toJSON()
     }catch(err){
