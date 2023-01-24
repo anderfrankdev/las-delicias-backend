@@ -21,8 +21,8 @@ const payWithStripe = curry(async(User,root, args, request)=>{
 			stripe.checkout.sessions.create({
 			    line_items:items ,
 			    mode: 'payment',
-			    success_url: `http://localhost:5173/app/#home`,
-			    cancel_url: `http://localhost:5173/app/#home`
+			    success_url: `http://localhost:5173/app/#payment`,
+			    cancel_url: `http://localhost:5173/app/#payment`
 			})
 		]) 
 
@@ -39,7 +39,7 @@ const payWithStripe = curry(async(User,root, args, request)=>{
 	
 	const order = {
 		products:input,
-		payment:session.id
+		paymentId:session.id
 	}
 	request.session.order = order
 	

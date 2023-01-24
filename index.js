@@ -19,12 +19,14 @@ const deleteItemInCart = require("./presenters/deleteItemInCart");
 const addAddress = require("./presenters/addAddress");
 const deleteAddress = require("./presenters/deleteAddress");
 const selectAddress = require("./presenters/selectAddress");
+const processPayment = require("./presenters/processPayment");
 
 
 // ***** Models ******
 
 const User = require("./models/User");
 const Plate = require("./models/Plate");
+const Order = require("./models/Order");
 
 // ******* middlewares ********
 
@@ -109,7 +111,11 @@ const graphqlPresenters = {
     Query:{
     	getOwnData:checkSession(User),
     	getPlates:getPlates(Plate),
-    	logout:logoutPresenter	
+    	logout:logoutPresenter,
+    	processPayment:processPayment({
+    			Order,
+    			User
+    		})
     },
     Mutation:{
     	createUser:createUser(User),

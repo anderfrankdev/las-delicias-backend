@@ -10,12 +10,9 @@ type Plate{
 }
 
 type Order{
-    price:Float
-    title:String
-    images:[String]
-    amount:Float
-    date:Float
-    status:String
+    id:ID
+    amount_items:Int
+    amount_paid:Float
 }
 
 type Address{
@@ -61,6 +58,7 @@ type Query{
     getOwnData:User
     logout:LogoutMsg
     getPlates:[Plate]
+    processPayment:PaymentMessage
 }
 
 input LoginInput{
@@ -107,6 +105,12 @@ type Message{
 type AddressMessage{
     message:String
     id:ID
+}
+type PaymentMessage{
+    message:String
+    successful:Boolean
+    address:Address
+    order:Order
 }
 type Mutation{
     createUser(input:UserInput!):User
