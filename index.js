@@ -1,6 +1,7 @@
 console.time("App start")
 
 require('dotenv').config()
+const isDev = process.env.NODE_ENV !== 'production'
 
 const app = require("express")()
 const dbConnection = require("./database/config")
@@ -39,7 +40,9 @@ const jsonMiddleware = require("express").json()
 const session = require("express-session")
 const filesMiddleware = require("express").static("./public")
 const corsMiddleware = require("cors")({
- 	origin :"http://localhost:5173",
+ 	origin :!isDev 
+ 		? "https://lasdelicias.fly.dev"
+ 		: "http://localhost:5173",
  	credentials:true
 })
 const userAgent = require("express-useragent").express()
@@ -90,7 +93,6 @@ const graphqlMiddleware = graphqlHTTP((req,res)=>{
 
 // ***************
 
-const isDev = process.env.NODE_ENV !== 'production'
 
 const f = Object.freeze
 

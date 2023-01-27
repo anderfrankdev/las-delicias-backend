@@ -31,8 +31,8 @@ const payWithStripe = curry(async(Models,root, args, request)=>{
 			    line_items:items ,
 			    
 			    mode: 'payment',
-			    success_url: `http://localhost:5173/app/#payment`,
-			    cancel_url: `http://localhost:5173/app/#payment`,
+			    success_url: `https://lasdelicias.fly.dev/#payment`,
+			    cancel_url: `https://lasdelicias.fly.dev/#payment`,
 			    discounts
 			})
 		]) 
