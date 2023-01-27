@@ -20,6 +20,8 @@ const addAddress = require("./presenters/addAddress");
 const deleteAddress = require("./presenters/deleteAddress");
 const selectAddress = require("./presenters/selectAddress");
 const processPayment = require("./presenters/processPayment");
+const createDiscount = require("./presenters/createDiscount");
+const getDiscounts = require("./presenters/getDiscounts");
 
 
 // ***** Models ******
@@ -27,6 +29,7 @@ const processPayment = require("./presenters/processPayment");
 const User = require("./models/User");
 const Plate = require("./models/Plate");
 const Order = require("./models/Order");
+const Discount = require("./models/Discount");
 
 // ******* middlewares ********
 
@@ -115,18 +118,26 @@ const graphqlPresenters = {
     	processPayment:processPayment({
     			Order,
     			User
-    		})
+    		}),
+    	getDiscounts:getDiscounts(Discount)
     },
     Mutation:{
     	createUser:createUser(User),
     	login:loginPresenter(User),
     	createPlate:createPlate(Plate),
-    	pay:payWithStripe(User),
+    	pay:payWithStripe({
+    			Order,
+    			User
+    		}),
     	addToCart:addToCart(User),
     	deleteItemInCart:deleteItemInCart(User),
     	addAddress:addAddress(User),
     	deleteAddress:deleteAddress(User),
-    	selectAddress:selectAddress(User)
+    	selectAddress:selectAddress(User),
+    	createDiscount:createDiscount({
+    		Plate,
+    		Discount
+    	})
    	}
 }
 

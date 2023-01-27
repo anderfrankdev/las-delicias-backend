@@ -59,6 +59,7 @@ type Query{
     logout:LogoutMsg
     getPlates:[Plate]
     processPayment:PaymentMessage
+    getDiscounts:[Discount]
 }
 
 input LoginInput{
@@ -112,14 +113,33 @@ type PaymentMessage{
     address:Address
     order:Order
 }
+
+type Discount{
+    title:String
+    stripe_price:String
+    stripe_discount:String
+    percentage:Int
+    image:String
+}
+
+input DiscountInput{
+    stripe_price:String
+    stripe_discount:String
+    percentage:Int
+}
+input PayInput {
+    products:[[String]]
+    coupon:String
+}
 type Mutation{
     createUser(input:UserInput!):User
     createPlate(input:PlateInput!):Plate
     login(input:LoginInput!):User
-    pay(input:[[String]]!):PaymentResponse
+    pay(input:PayInput!):PaymentResponse
     addToCart(input:[[String]]!):Message
     deleteItemInCart(input:String!):Message
     addAddress(input:AddressInput!):AddressMessage
     deleteAddress(input:ID!):Message
     selectAddress(input:ID!):Message
+    createDiscount(input:DiscountInput):Message
 }

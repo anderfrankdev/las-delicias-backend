@@ -17,6 +17,10 @@ const OrderSchema = Schema({
 	address:{
 		type:Object,
 		required:[true,"The address id is obligatory"]
+	},
+	paid:{
+		type:Boolean,
+		required:false
 	}
 });
 
